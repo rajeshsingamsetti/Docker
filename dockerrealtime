@@ -1,1 +1,77 @@
 Hello docker
+Docker is an containization tool
+we can run any virtual machines in small containers
+container orchestartion tools are managed the containers
+
+what is container
+containers is nothing but a process . in that process we can run containers
+conatainers contain
+namespaces: it creted its own namespaces
+controlgroups: it will manage the how mush space occupied to containers
+
+docker mixed all those things it will give u and guide u
+
+Installation:
+Docker Types: (find os cat /etc/*release )
+Community Edition (CE)
+Enterprise Edition(EE) here we will get an licenced key to use
+
+We are using community edition. Before we had docker.io but as of now free use we r using docker ce
+
+Installations:Rhel:8
+Reference link:
+Go to console(putty or aws)
+sudo su
+cd 
+yum install yum-utils device-mapper-persistent-data lvm2
+      yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      sudo yum install docker-ce docker-ce-cli containerd.io --nobest
+
+continue(Docker Compose)
+
+Accept the permission with y
+
+Wait for status will be 
+Skipped:
+  docker-ce-3:19.03.11-3.el7.x86_64                                                                                                                                                                       
+Complete!
+systemctl start docker
+systemctl enable docker
+docker --version
+Test Docker:
+docker run hello-world
+     If u see hello from docker!  
+      Means its sucess
+Install Docker Compose
+Foolllow below url to install docker compose
+
+sudo docker-compose --version
+
+ 
+========
+Refurl: https://docs.docker.com/engine/install/ubuntu/
+
+Docker Install On Ubuntu
+sudo apt-get update
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install     apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) \
+stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+apt-cache madison docker-ce
+sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=5:18.09.6~3-0~ubuntu-bionic containerd.io
+sudo apt-get install docker-ce=5:18.09.6~3-0~ubuntu-bionic docker-ce-cli=5:18.09.6~3-0~ubuntu-bionic containerd.io
+Docker Compose:
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version
+
+
+
+
