@@ -83,6 +83,14 @@ https://jvns.ca/blog/2016/10/10/what-even-is-a-container/#:~:text=When%20you%20u
 
 docker is used for stateless applications
 
+docker run --rm --dit --name mycontainer imagename
+
+
+docker run --rm --dit --name webapp1 --publish 8000:80 sreeharshav/testcontainer:v1
+
+
+
+
 
 
 
