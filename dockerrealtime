@@ -77,6 +77,15 @@ docker-compose --version
 
 ==================
 
+what is container brief explanation:
+
+https://jvns.ca/blog/2016/10/10/what-even-is-a-container/#:~:text=When%20you%20use%20those%20features,Let's%20dive%20in!
+
+docker is used for stateless applications
+
+
+
+
 
 
 
