@@ -1,4 +1,7 @@
 Hello docker
+refdocument:
+3333 raj
+url: https://docs.google.com/presentation/d/1aM2lfblBEaMm4m0033sPQJMlZvWNH51VLEgE3tMOAXw/edit#slide=id.g1f87997393_0_782
 Docker is an containization tool
 we can run any virtual machines in small containers
 container orchestartion tools are managed the containers
@@ -88,6 +91,81 @@ docker run --rm --dit --name mycontainer imagename
 
 docker run --rm --dit --name webapp1 --publish 8000:80 sreeharshav/testcontainer:v1
 
+
+                                                      Docker Networking
+hostname resolutions important in  container system
+
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+6d43475b1e61        bridge              bridge              local
+7a9da268b4ef        host                host                local
+3725bf7f6bf9        none                null                local
+
+Here the scope means it will access only inside the server not in outside
+
+Host is name of network
+I want run a container and that container i don’t want get a direct access from outside without portforwarding
+Above scenario bridge network will useful 
+
+Host network
+Whatever network present in host machine  that will be asign to container. we will get a direct access of a network from outside . 
+
+None:
+I want create a container without any network that time we can use none
+
+
+docker network ls(to show networks)
+docker network inspect (inspect network)
+We can see how many bridges connected to that network.
+docker network create --driver
+docker network connect
+docker network disconnect
+
+Bridge network is predefined network which we can’t delete
+
+To create bridge network the cidr network length is 10.10.0.0/24  ---- gateway → 10.10.0.1 nameofsubnet
+docker network create --subnet 10.10.0.0/24 --gateway 10.10.0.1 rajnetwork
+After suuccessfully executed u get this below code
+6f179747fa9aefb513c4ecac327a6a420abe847fea9b38a1a1b942fc584a70cf
+To check network
+docker network ls (here u will see all your networks)
+
+docker network inspect nameofnetwork
+Here u will see created subnet with range in json format with default network is bridge
+
+Now run a container with your own created network
+
+docker run -ti  --name raj --hostname sing --net rajnetwork --ip 10.10.0.10 ubuntu
+
+Connect:
+docker network connect 758d720e4cc2(networkid) 7f6fad993a93(existing conatiner id)
+Ip a (now count network list)
+docker network disconnect 758d720e4cc2(networkid) 7f6fad993a93(existing conatiner id)
+ip a  (now one network will be disconnected from container)
+docker network prune (this will  remove all networks not used by conatiner)
+docker --help
+
+
+                                                create a new network
+docker network create  my_app_net
+Now we are running a container using a particular network
+
+docker container run -d --name new_nginx --network my_app_net nginx(image name)
+docker network inspect my_app_net
+In last json data we can new_nginx server.
+
+Connect
+docker network connect 758d720e4cc2(networkid) 7f6fad993a93(existing conatiner id)
+
+To check network added or not using
+
+docker container  inspect 7f6fad993a93  (docker existing wehost containerid)
+
+Now we can see myappnet network is add
+Disconnect:
+docker network disconnect 758d720e4cc2(networkid) 7f6fad993a93(existing conatiner id)
+docker container  inspect 7f6fad993a93  (docker existing wehost containerid)
+Now we have only one network only.
 
 
 
