@@ -548,6 +548,83 @@ above way we are connecting from frontend container to backend mysql
 
 
 ========================================================================================================================================================
+                                                            Docker Volumes
+if container delete also data won't delete
+2 ways
+bind mount
+volumes
+
+majory we used volumes( default path var/lib/docker/volumes)
+docker volume ls
+ls /var/lib/docker/volumes
+docker volume create testvol1
+docker volume create testvol2
+docker volume create testvol2
+ls /var/lib/docker/volumes
+
+
+docker run --rm -dit -v testvol1:/testfolder sreeharshav/utils
+
+docker exec -it imngname bash
+
+under root folder
+mkdir testfolder
+cd testfolder
+for i in (1..4)
+do
+echo $(date) > file$i
+cat file$1
+sleep 1
+done
+
+
+if u create files here it will storing on var/lib/docker/volumes/testvol1/_data
+
+if you delete the container also the files will saved in docker volumes path
+
+
+same way we are planning to mysql
+docker run --rm -dit --name mysql -v testvol2:/var/lib/mysql mysql/mysql-server:latest
+
+docker ps
+docker logs mysql (get password)
+docker exec -it mysql bash
+mysql -u root -p
+password (after change the password)
+follow the above data schema table strctures)
+
+now if u delete the container also the files will stored in testvol2
+
+now we. are going to build front end
+
+docker run dit --name frontend sreeharshav/utils
+
+docker exec -it frontend bash
+apt update && apt install  -y python3-pip python3
+pip3 install pyodbc
+pip3 install sqlalchemy
+pip3 install pymysql
+
+create app.py
+import pyodbc
+import sqlalchemy as sal
+import pymysql
+from sqlalchemy import create_engine
+cnx = create_engine('mysql+pymysql://root:India123@mysql/myflixdb')
+data = cnx.execute("select * from movies").fetchall()
+for item in data:
+    print(item)
+    
+paste above code
+
+python3 app.py
+
+
+
+
+
+
+
 
 
 
