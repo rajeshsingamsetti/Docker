@@ -178,6 +178,12 @@ do
 docker inspect $c | grep -i "IPAddress"
 done
 
+Note: we can't trust ip's in docker we need to trust the dns resolution
+
+docker run --help
+docker run --rm -dit --name outsidename --hostname insidename --network host imagename 
+
+docker exec -it  outsidename bash
 
 
 
