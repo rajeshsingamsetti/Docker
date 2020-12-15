@@ -167,6 +167,17 @@ docker network disconnect 758d720e4cc2(networkid) 7f6fad993a93(existing conatine
 docker container  inspect 7f6fad993a93  (docker existing wehost containerid)
 Now we have only one network only.
 
+to get container id's
+docker ps -aq
+
+to get a ipaddress of container
+docker inspect containerid | grep -i "IPAddress"
+to get all ips
+for c in $(docker ps -aq)
+do
+docker inspect $c | grep -i "IPAddress"
+done
+
 
 
 
