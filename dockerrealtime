@@ -744,8 +744,48 @@ publish --> access over internet.
 expose --> he container which assign docker file it will assign to that conatiner when docker image is build to understading purpose which ports are expose in container
 
 
+USER
+iam give ec2 + s3 full access
+aws configure (install aws cli)
+access key
+secret key
+
+usermod -aG docker ubuntu
+service docker restart
+systemctl restart docker
+
+take duplicate session login with ubuntu user access docker
+docker ps
+
+but if u want access the aws credentails present inside root
+
+to access root folder data using docker
+
+docker run --rm -dit -v /root/ .aws/:/tmp/aws/ sreeharshav/utils
+docker exec -it somename cat /tmp/aws/credentials
+
+now we will get aws access key and secreat key
 
 
+vi Dockerfile
+FROM ubuntu:18.04
+LABEL owener="raj"
+RUN apt update; \
+    apt install -y nginx nano wget curl net-tools; \
+    mkdir /myapp
+RUN groupadd -r testuser && useradd -r -g testuser testuser
+WORKDIR /myapp
+USER testuser
+#CMD ["nginx","-g", "daemon off;"]
+ 
+
+docker build -t rajeshsingam/testimg:v1 .
+docker run --rm -it -p 8000:80 rajeshsingam/testimg:v1
+
+
+check dockerfile copy shell script
+
+VOLUME CREATE DOCKERFILE
 
 
 
