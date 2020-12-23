@@ -1,5 +1,9 @@
 Hello docker
 refdocument:
+rajesh docker tuts on failure:
+https://www.youtube.com/watch?v=OC8KX54kJIM&list=PLBiBedx7DOQDqQT3Hyu0s-9kR0s44SEee&index=6
+https://www.youtube.com/watch?v=Ps1se3GSk6o&list=PLBiBedx7DOQDqQT3Hyu0s-9kR0s44SEee&index=7
+
 3333 raj
 url: https://docs.google.com/presentation/d/1aM2lfblBEaMm4m0033sPQJMlZvWNH51VLEgE3tMOAXw/edit#slide=id.g1f87997393_0_782
 Docker is an containization tool
@@ -621,7 +625,125 @@ python3 app.py
 
 
 
-================================ DockerFile===================================================
+=================================================== DockerFile ===================================================
+
+Dockerfile (name must be start with capital letter)
+Dockerhub contain images from their we can pull those images
+
+rajeshsingam
+111 u know
+
+diff b/w registry and repo
+dockerhub and githubs are registry.
+inside registry repo's will be there.
+
+for docker file launch one instance.
+Dockerfile
+FROM
+RUN
+LABEL
+ADD
+COPY
+CMD
+ENTRYPOINT
+USER
+WORKDIR
+EXPOSE
+ARG
+
+docker stop $(docker ps -aq)
+
+amazon linux install docker
+sudo yum install -y docker
+9  sudo service docker start
+10  sudo usermod -a -G docker ec2-user
+
+
+FROM ubuntu:18.04
+LABEL owener="raj"
+RUN apt update
+RUN apt install -y nano wget curl net-tools
+RUN mkdir /myapp
+WORKDIR /myapp
+
+we can modify the 
+FROM ubuntu:18.04
+LABEL owener="raj"
+RUN apt update; \
+    apt install -y nginx nano wget curl net-tools; \
+    mkdir /myapp
+ADD /var/www/html    
+WORKDIR /myapp
+
+docker build -t rajeshsingam/testimg:v1 .
+
+docker run --rm -it -p 8000:80 rajeshsingam/testimg:v1
+if u run the image it will directly going into
+
+inside folder of myapp (bcoz of workdir)
+
+git clone https://github.com/mavrick202/dockertest1.git
+cd dockertest1
+ rm -rf Jenkinsfile RemoveExistingFiles.sh appspec.yml testfile1 
+
+vi Dockerfile
+FROM ubuntu:18.04
+LABEL owener="raj"
+RUN apt update; \
+    apt install -y nginx nano wget curl net-tools; \
+    mkdir /myapp
+COPY index.html /var/www/html/index.nginx-debian.html 
+COPY scorekeeper.js /var/www/html/
+COPY style.css /var/www/html/
+WORKDIR /myapp
+
+
+
+docker run --rm -it -p 8000:80 rajeshsingam/testimg:v1
+
+after service nginx start
+
+after go to chrome ur public ip with
+publicip:8000/
+
+
+** add is used for to download data from url not from inside machine we used rarely most probably we use copy
+ex:
+FROM ubuntu:18.04
+LABEL owener="raj"
+RUN apt update; \
+    apt install -y nginx unzip nano wget curl net-tools; \
+    mkdir /myapp
+COPY index.html /var/www/html/index.nginx-debian.html 
+COPY scorekeeper.js /var/www/html/
+COPY style.css /var/www/html/
+ADD https://releases.hashicorp.com/terraform/0.14.3/terraform_0.14.3_linux_amd64.zip /usr/local/bin
+RUN unzip /usr/local/bin/terraform_0.14.3_linux_amd64.zip 
+RUN chmod 700 terraform
+RUN mv terraform /usr/local/bin
+WORKDIR /myapp
+EXPOSE 80
+CMD ["nginx","-g", "daemon off;"]
+
+docker stop $(docker ps -aq)
+
+diff b/w cmd & entrypoint
+
+cmd : after building a container what do you want to do in start container will use in cmd
+WHEN CONTAINER START CMD WILL AUTO RUN
+
+note when u run without bash (cmd will work if u use it will overwrite cmd)
+if u want overcome that we use entrypoint
+ENTRYPOINT ["PING"]
+CMD ["www.google.com"]
+
+we can overwrite the data of cmd but not ping bcoz its in entrypoint
+
+publish is different expose differener.
+publish --> access over internet.
+expose --> the container which assign docker file it will assign to that conatiner when docker image is build to understading purpose which ports are expose in container
+
+
 
 
 
