@@ -741,7 +741,7 @@ we can overwrite the data of cmd but not ping bcoz its in entrypoint
 
 publish is different expose differener.
 publish --> access over internet.
-expose --> the container which assign docker file it will assign to that conatiner when docker image is build to understading purpose which ports are expose in container
+expose --> he container which assign docker file it will assign to that conatiner when docker image is build to understading purpose which ports are expose in container
 
 
 
