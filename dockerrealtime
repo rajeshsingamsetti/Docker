@@ -787,6 +787,20 @@ check dockerfile copy shell script
 
 VOLUME CREATE DOCKERFILE
 
+                                                Docker Compose:
+is used to run multiple containers as a single service. For example, suppose you had an application which required NGNIX and MySQL,
+you could create one file which would start both the containers as a service without the need to start each one separately.
+
+
+it helps developer to deploy multiple containers in easy way.
+we don't use in production system.
+
+deploy a ubuntu machine with docker and docker compose.
+
+docker voting app example
+
+https://github.com/dockersamples/example-voting-app
+
 
 
 
