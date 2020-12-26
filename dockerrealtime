@@ -788,7 +788,7 @@ check dockerfile copy shell script
 VOLUME CREATE DOCKERFILE
 
                                                 Docker Compose:
-is used to run multiple containers as a single service. For example, suppose you had an application which required NGNIX and MySQL,
+It is used to run multiple containers as a single service. For example, suppose you had an application which required NGNIX and MySQL,
 you could create one file which would start both the containers as a service without the need to start each one separately.
 
 
@@ -800,6 +800,156 @@ deploy a ubuntu machine with docker and docker compose.
 docker voting app example
 
 https://github.com/dockersamples/example-voting-app
+
+
+sample docker-compose file
+---------
+version: "3"
+
+services:
+  vote:
+    build: ./vote
+    command: python app.py
+    volumes:
+     - ./vote:/app
+    ports:
+      - "5000:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  result:
+    build: ./result
+    command: nodemon server.js
+    volumes:
+      - ./result:/app
+    ports:
+      - "5001:80"
+      - "5858:5858"
+    networks:
+      - front-tier
+      - back-tier
+
+  worker:
+    build:
+      context: ./worker
+    depends_on:
+      - "redis"
+      - "db"
+    networks:
+      - back-tier
+
+  redis:
+    image: redis:5.0-alpine3.10
+    container_name: redis
+    ports: ["6379"]
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:9.4
+    container_name: db
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
+  
+sample docker compose file:
+https://docs.docker.com/compose/wordpress/
+
+
+to run a dockercopose file
+
+docker-compose up -d
+
+to delete the all containers of docker-compose file
+
+docker-compose down
+
+
+
+
+docker compose we don't use in real time we use for development purpose only becoz it will deploy all the containers in a single instance only.
+
+
+docker compose reference:
+https://docs.docker.com/compose/reference/overview/
+
+
+docker swarm: (container archestration tool)
+it will follow raft algorithm
+
+for docker swarm practice:
+https://labs.play-with-docker.com/p/
+
+docker info
+docker info | grep -i swarm
+intially swarm will show inactive
+
+to activate swarm
+docker swarm init
+or
+docker swarm init --advertise-addr ipaddress
+
+now check : docker info | grep -i swarm
+swarm is active
+to check all nodes
+docker node ls
+
+$ docker node ls
+ID                            HOSTNAME   STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+gghvy3d8fp5nxqsoqfo0vogn4 *   node1      Ready     Active         Leader           20.10.0
+
+launch 3 instances
+docker swarm join-token worker
+
+it will generate one key copy and paste that key in all ur nodes
+now check 
+$ docker node ls
+we had 3 instances one is manager and 2 isn node
+
+note : this 3 servers having an one cluster.
+if manager gone we don;t had a chance to create nodes
+
+*** to promote multi nodes as a manager
+docker node promote multiplehostnames
+
+now other nodes are in status of reachable
+
+managers will be above the half of the worker nodes according raft algorithm quoram
+
+n-1/2
+(n/2) + 1
+
+docker node demote  node1
+docker swarm join-token manager
+docker swarm leave
+
+paste the swarm token key
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+
 
 
 
