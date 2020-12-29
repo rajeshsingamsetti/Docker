@@ -1157,9 +1157,59 @@ docker service logs nameofservice
 
 once we create service we don't rename it on runtime.
 
+===================== docker logs =======================
+launch a instance with userdata
+#!/bin/bash
+curl https://getdocker.com | bash
+docker swarm init
+
+after launching --> isntance settings + get system log (at bottom we will get docker swarm join (copy that)
+
+now launch 2 ubunu isntance with userdata
+#!/bin/bash
+curl https://getdocker.com | bash
+paste the docker swarm join token
 
 
-**
+login into master just type 
+docker node ls
+
+docker logs are very important
+we use logs 2 types
+one isfolder and one is directly screen it will print the data.
+
+stdin 0: 
+stdout 1: screen display
+stderr 2: 
+
+docker run --rm -dit -p 8000:80 httpd
+
+docker logs --follow adoring_sutherland
+
+acees ipaddrees with portno:
+now we will see the logs file in terminal
+
+
+if container lost the log data also we lost.
+
+ref url:
+https://docs.docker.com/engine/reference/commandline/logs/
+
+now create one service of httpd
+
+docker service logs --help
+docker service logs --follow servicename
+
+logs we can see in diff formats.
+
+
+
+
+
+
+
+
+
 
 
   
