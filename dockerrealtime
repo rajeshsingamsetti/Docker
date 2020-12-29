@@ -1056,12 +1056,80 @@ to overcome the port issues along with domain name we are using "ingress control
 
 remove all services
 docker service rm name of all services
-
+delete all target groups also
+remove load balancer listner
+remove docker visualizer.
 Docker Traefik Steps:
  
 https://blog.programster.org/using-traefik-with-docker-swarm-for-deploying-web-applications
 
 follow the above blog steps
+
+now create a new target group + name traefik + tcp (80) + urvpc + next + add all instances + create.
+
+go to laod balancer + below add listner + tcp(80) + forward choose ur tagetgroup name + save.
+Now we need to deploy traefik on our server.
+in master
+docker network create --driver=overlay traefik-net
+
+docker network ls (i will create treafik internet)
+
+docker service create \
+   --name traefik \
+   --constraint=node.role==manager \
+   --publish 80:80 \
+   --publish 8080:8080 \
+   --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+   --network traefik-net \
+   traefik:v1.6 \
+   --docker \
+   --docker.swarmmode \
+   --docker.domain=traefik \
+   --docker.watch \
+   --web
+   
+ docker service ls
+ 
+ now we need to create the service.
+ 
+ docker service create \
+   --name app1 \
+   --label traefik.port=80 \
+   --network traefik-net \
+   --label traefik.frontend.rule=Host:app1.urdomainname.xyz\
+   sreeharshav/rollingupdate:v1
+ 
+ docker service create \
+   --name app2 \
+   --label traefik.port=80 \
+   --network traefik-net \
+   --label traefik.frontend.rule=Host:app2.urdomainname.xyz\
+   sreeharshav/rollingupdate:v1
+ 
+ docker service create \
+   --name app3 \
+   --label traefik.port=80 \
+   --network traefik-net \
+   --label traefik.frontend.rule=Host:app3.urdomainname.xyz\
+   sreeharshav/testcontainer:v1
+   
+   
+deloy all this services on your machine
+
+
+
+route53: simplle
+create a recordset + app1(name) + cname + paste dns + create
+create a recordset + app2(name) + cname + paste dns + create
+create a recordset + app3(name) + cname + paste dns + create
+   
+
+check target groups all are helathy.
+
+
+now u access ur domain name according to ur dns name it will display ur web page without had port issues.
+
+
 
 
 
