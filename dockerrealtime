@@ -938,6 +938,14 @@ docker swarm leave
 paste the swarm token key
 
 
+in real time we need to maintain multiple managers.
+
+master will be half above the total count of all the nodes.
+
+master node + worker nodes = swarm cluster.
+
+it will work on raft algorithm
+
 
 
 
