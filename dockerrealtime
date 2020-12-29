@@ -947,8 +947,68 @@ master node + worker nodes = swarm cluster.
 it will work on raft algorithm
 
 
+                                                            Replicas for service
+in master create service                                                            
+docker service create --name mynginx --publish 8000:80 sreeharshav/rollingupdate:v3
+** docker swarm visualizer
+https://github.com/dockersamples/docker-swarm-visualizer
+
+it will show only services created by cluster
+
+for multiple copies:
+docker service scale nameofservice=2
+
+or
+docker service update nameofservice --replicas 5
 
 
+service is an overlay network which applicable for all containers in all servers in cluster.
+dokcer visualizer refernce url:
+https://github.com/dockersamples/docker-swarm-visualizer
+===================madhu notes=======
+aws ec2 run-instances   --image-id ami-08ebab39574d1e681 --key-name LaptopKey --security-group-ids sg-08944ea9f10aa4121 --instance-type t2.micro --placement AvailabilityZone=us-east-1b  --subnet-id subnet-0ac37305c1dc6efc5  --tag-specifications ResourceType=instance,Tags=[{Key=Name,Value=DockerSwarm-}] --count 3
+ 
+docker node ls
+docker node promote node
+docker node demote node
+docker swarm leave
+docker swarm leave --force
+ 
+docker service rm nginxtest
+docker service ps
+docker service ps --format 'table'
+ 
+docker service create --name nginx --replicas 3 nginx
+ 
+1. Create Swarm Cluster & Swarm basic commands. RAFT DB.
+2. Understand overlay driver & Create overlay network.
+  https://docs.docker.com/v17.09/engine/swarm/networking/#firewall-considerations
+3. Understand services and Create a service.
+4. Updating & Scaling Swarm service.
+5. Routing Mesh Swarm visualizer.
+https://github.com/dockersamples/docker-swarm-visualizer
+ 
+   docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock    
+   dockersamples/visualizer
+ 
+================================================================================================   
+   
+by using service if u delete also it will recreate.
+
+to restrict service will work on only workers follow below procedure.
+
+
+
+docker service create --name nginx --publish 8000:80  --constraint=node.role!=manager  sreeharshav/rollingupdate:v3 
+
+docker service scale nginx=3
+
+we can update lable and performance also
+docker node update --label-add=per=low hostname
+
+at low and high we can increase the services
+
+by using constraints we can manage lables and manager and worker(31 videos completed)
 
 
   
