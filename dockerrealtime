@@ -1010,9 +1010,68 @@ at low and high we can increase the services
 
 by using constraints we can manage lables and manager and worker(31 videos completed)
 
+                                                                  Docker swarm networking
+service mesh
+docker service with load balancer
 
-  
-  
+
+take 3 servers configure docker swarm.
+docker network ls
+after swarm enable we will see ingress and bridge networks.
+now we will see ingress network bcoz of swarm
+ingress : outside traffic comes into inside.
+egress: inside traffic going to outside
+
+when u are creating a service that time u can scale upto 3 after scale down to 1 also the remainiing all three servers will provide the service without loss.
+bcoz of internally its using ingress network.
+
+insted of we can access 3 servers invidually we can use load balancer for single url
+
+create target group + name + protocol tcp(80) + choose vpc + next + add or choose instances + create a target group.
+create a load balancer + choose network load balancer + give name + choose all public subnets + next + choose existing target group + choose existing target name +
+review + create.
+
+note : when u are creating a service using a portno and that the same port no we don't use in another service
+
+* Goto Route53:
+create a record set.
+give name + record type choose cname + paste ur load balancer dns name(remove front https) + create .
+
+now create another 2 diff services with diff port no.(note that port no)
+
+create a target group + instance + tcp (make same port what u used to create service)+ choose vpc + target name (app2) + add the same servers above what u add.+ create.
+
+now we have 2 target groups with 2 diff ip
+1 is 80
+1 is 8100
+
+go to load balancer + below come to listner + (note don't had chance to use existing port) + add listner tcp + 8100 + forward to + choosee previos name + save.
+
+
+go to route 53 + add record + cname + same dns name + name app2 + create .
+
+but when u use dns for app2 u need to give port no to overcome that. 
+
+to overcome the port issues along with domain name we are using "ingress controller"
+
+remove all services
+docker service rm name of all services
+
+Docker Traefik Steps:
+ 
+https://blog.programster.org/using-traefik-with-docker-swarm-for-deploying-web-applications
+
+follow the above blog steps
+
+
+
+
+
+
+
+**
+
+
   
   
   
