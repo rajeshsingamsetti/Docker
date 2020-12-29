@@ -1130,10 +1130,32 @@ check target groups all are helathy.
 now u access ur domain name according to ur dns name it will display ur web page without had port issues.
 
 
+the above process called ingress controller.
+
+the above procedure we used in real time
 
 
+Node maintainance:
+NODE AVAILABILITY:(service name)
+================
+docker node update  --availability pause(hostname) node5 - Dont accept new tasks , runs existing.
+docker node update  --availability active node5
+docker node update  --availability drain node5 - Reschedule talsks
+
+docker service update:
+Swarm Rolling Updates.
+docker service create \
+--replicas 10 \
+--publish 8000:80 \
+--name nginx \
+--update-parallelism 1 \
+--update-delay 10s \
+sreeharshav/rollingupdate:v1
 
 
+docker service logs nameofservice
+
+once we create service we don't rename it on runtime.
 
 
 
