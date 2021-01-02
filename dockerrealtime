@@ -1277,6 +1277,11 @@ https://docs.docker.com/engine/reference/commandline/events/
  
 =====================================================================
 
+docker stack (we wonlt use deploy + compose will use deploy)
+
+we will use only in production not on dev
+
+
 
 
 
