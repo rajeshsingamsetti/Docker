@@ -1240,6 +1240,42 @@ docker service create --name nginx1 --config src=nginxindex1,target=/usr/share/n
 docker service update --config-rm config1 --config-add src=config2,target=/usr/share/nginx/html/index.html nginx1
 
 
+Docker Swarm Secrets:
+===================
+https://blog.ruanbekker.com/blog/2017/11/23/use-docker-secrets-with-mysql-on-docker-swarm/
+
+
+                                    docker health checks.
+
+Container Healthchecks:
+====================
+Dockerfile for health-checks:
+FROM sreeharshav/rollingupdate:v4
+RUN apt install -y curl
+HEALTHCHECK CMD curl --fail http://localhost || exit 1
+CMD ["nginx", "-g", "daemon off;"]
+ 
+docker build -t  <yourdockerhubaccount>/healthcheck:latest
+ 
+Docker container healthchecks
+https://blog.sixeyed.com/docker-healthchecks-why-not-to-use-curl-or-iwr/
+HEALTHCHECK CMD curl --fail http://localhost:3000/ || exit 1
+ 
+docker inspect --format='{{json .State.Health}}' your-container-name
+ 
+ 
+docker service logs NGINX
+docker service logs wza88dx6v4pr
+docker service logs wza88dx6v4pr --no-task-ids
+docker service logs --raw --no-trunc wza88dx6v4pr
+docker service logs --raw --no-task-ids --no-trunc wza88dx6v4pr
+docker service logs --tail 10 --follow --raw --no-trunc NGINX
+ 
+==========================================================================
+ 
+https://docs.docker.com/engine/reference/commandline/events/
+ 
+=====================================================================
 
 
 
